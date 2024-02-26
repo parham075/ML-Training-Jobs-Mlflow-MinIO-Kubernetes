@@ -1,0 +1,4 @@
+n_estimators: 300
+max_depth: 10
+random_state: 17
+  

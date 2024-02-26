@@ -1,0 +1,219 @@
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: log-reader-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["create","patch","delete","list","watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-manager-role
+rules:
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get","list"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: log-reader-default-binding
+  namespace: test
+  
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: log-reader-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: test
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-manager-default-binding
+  namespace: test
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pod-manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: test
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calrissian-input-data
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calrissian-tmpout
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calrissian-output-data
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+
+--- 
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stage-input-data
+spec:
+  template:
+    spec:
+      containers:
+      - name: stage-input-data
+        image: dukegcb/calrissian:latest
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        command:
+        - "sh"
+        - "-c"
+        - "cp input-data/* /calrissian/input-data/"
+        volumeMounts:
+        - mountPath: /calrissian/input-data
+          name: calrissian-input-data
+      restartPolicy: OnFailure
+      volumes:
+      - name: calrissian-input-data
+        persistentVolumeClaim:
+          claimName: calrissian-input-data
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: calrissian-revsort-array
+spec:
+  template:
+    spec:
+      containers:
+      - name: calrissian
+        image: dukegcb/calrissian:latest
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        command: ["calrissian"]
+        args:
+          - "--debug"
+          - "--stdout"
+          
+          - "/calrissian/output-data/revsort-output.json"
+          - "--stderr"
+          - "/calrissian/output-data/revsort-stderr.log"
+          - "--max-ram"
+          - "16G"
+          - "--max-cores"
+          - "4"
+          - "--tmp-outdir-prefix"
+          - "/calrissian/tmpout/"
+          - "--outdir"
+          - "/calrissian/output-data/"
+          - "--usage-report"
+          - "/calrissian/output-data/revsort-usage.json"
+          - "/calrissian/input-data/revsort-array.cwl"
+          - "/calrissian/input-data/revsort-array-job.json"
+        volumeMounts:
+        - mountPath: /calrissian/input-data
+          name: calrissian-input-data
+          readOnly: true
+        - mountPath: /calrissian/tmpout
+          name: calrissian-tmpout
+        - mountPath: /calrissian/output-data
+          name: calrissian-output-data
+        env:
+        - name: CALRISSIAN_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      restartPolicy: Never
+      volumes:
+      - name: calrissian-input-data
+        persistentVolumeClaim:
+          claimName: calrissian-input-data
+          readOnly: true
+      - name: calrissian-tmpout
+        persistentVolumeClaim:
+          claimName: calrissian-tmpout
+      - name: calrissian-output-data
+        persistentVolumeClaim:
+          claimName: calrissian-output-data
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: view-results
+spec:
+  template:
+    spec:
+      containers:
+      - name: view-results
+        image: dukegcb/calrissian:latest
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        command:
+        - "sh"
+        - "-c"
+        - "more /calrissian/output-data/* | cat"
+        volumeMounts:
+        - mountPath: /calrissian/output-data
+          name: calrissian-output-data
+          readOnly: true
+      restartPolicy: OnFailure
+      volumes:
+      - name: calrissian-output-data
+        persistentVolumeClaim:
+          claimName: calrissian-output-data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

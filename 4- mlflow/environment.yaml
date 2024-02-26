@@ -1,0 +1,41 @@
+name: env_5
+channels:
+  - conda-forge
+  - defaults
+  
+dependencies:
+  - pystac>=1.4.0
+  - pystac-client
+  - python==3.10.13
+  - numpy
+  - gdal
+  - geojson
+  - scikit-learn
+  - ipykernel
+  - pandas
+  - geopandas
+  - matplotlib
+  - pyproj
+  - notebook
+  - joblib
+  - gdown
+  - types-PyYAML
+  - pyYAML
+  - python-box
+  - tensorflow==2.11.0
+  - mlflow==2.2.2
+  - black[jupyter]
+  - seaborn
+  - pip
+  - pip:
+    - rasterio
+    - folium
+    - loguru
+    - boto3
+    - botocore
+    - ensure
+    - pathlib
+    - dataclasses
+    - tqdm
+    - minio
+    - urllib3

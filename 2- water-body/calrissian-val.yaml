@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calrissian-input-data
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calrissian-output-data
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stage-input-data
+spec:
+  template:
+    spec:
+      containers:
+      - name: stage-input-data
+        image: dukegcb/calrissian:latest
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        command:
+        - /bin/bash
+        - -c
+        args:
+          - cp /input-data/* /calrissian/input-data/ && cd /calrissian/input-data && ls -a && cat app-water-body-cloud-native.cwl
+          
+        volumeMounts:
+        - name: calrissian-input-data
+          mountPath: /calrissian/input-data
+
+        - name: water-conf
+          mountPath: /input-data/app-water-body-cloud-native.cwl
+          subPath: app-water-body-cloud-native.cwl
+
+        - name: params-conf
+          mountPath: /input-data/params.yaml
+          subPath: params.yaml
+
+      restartPolicy: OnFailure
+      volumes:
+      - name: calrissian-input-data
+        persistentVolumeClaim:
+          claimName: calrissian-input-data
+      - name: water-conf
+        configMap:
+          name: water-conf
+      - name: params-conf
+        configMap:
+          name: params-conf
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: calrissian-water-body
+spec:
+  template:
+    spec:
+      containers:
+      - name: calrissian
+        image: dukegcb/calrissian:latest
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        command: 
+          - calrissian
+        args:
+          - "--debug"
+          - "--stdout"
+          - "/calrissian/output-data/results.json"
+          - "--stderr"
+          - "/calrissian/output-data/app.log"
+          - "--max-ram"
+          - "4G"
+          - "--max-cores"
+          - "8"
+          - "--tmp-outdir-prefix"
+          - "/calrissian/output-data/"
+          - "--outdir"
+          - "/calrissian/output-data/"
+          - "--usage-report"
+          - "/calrissian/output-data/revsort-usage.json"
+          - "/calrissian/input-data/app-water-body-cloud-native.cwl"
+          - "/calrissian/input-data/params.yaml"
+          
+          
+        volumeMounts:
+        - mountPath: /calrissian/input-data
+          name: calrissian-input-data
+          readOnly: false
+        - mountPath: /calrissian/output-data
+          name: calrissian-output-data
+          readOnly: false
+        env:
+        - name: CALRISSIAN_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      restartPolicy: Never
+      volumes:
+      - name: calrissian-input-data
+        persistentVolumeClaim:
+          claimName: calrissian-input-data
+          readOnly: false
+      - name: calrissian-output-data
+        persistentVolumeClaim:
+          claimName: calrissian-output-data

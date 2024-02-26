@@ -1,0 +1,134 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calrissian-input-data
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calrissian-output-data
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stage-copy-data
+spec:
+  template:
+    spec:
+      containers:
+      - name: stage-copy-data
+        image: dukegcb/calrissian:latest
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        command:
+        - /bin/bash
+        - -c
+        args:
+          - cp /input-data/* /calrissian/input-data/ && cd /calrissian/input-data && ls -a && cat simple-training-app.cwl 
+          
+        volumeMounts:
+        - name: calrissian-input-data
+          mountPath: /calrissian/input-data
+
+        - name: input-conf
+          mountPath: /input-data/inputs.yml
+          subPath: inputs.yml
+
+        - name: train-conf
+          mountPath: /input-data/simple-training-app.cwl
+          subPath: simple-training-app.cwl
+        
+
+      restartPolicy: OnFailure
+      volumes:
+      - name: calrissian-input-data
+        persistentVolumeClaim:
+          claimName: calrissian-input-data
+      - name: input-conf
+        configMap:
+          name: input-conf
+      - name: train-conf
+        configMap:
+          name: train-conf
+      
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: simple-training
+spec:
+  template:
+    spec:
+      containers:
+      - name: calrissian
+        image: dukegcb/calrissian:latest
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        command: 
+          - calrissian
+        args:
+          - "--debug"
+          - "--stdout"
+          - "/calrissian/output-data/results.json"
+          - "--stderr"
+          - "/calrissian/output-data/app.log"
+          - "--max-ram"
+          - "4G"
+          - "--max-cores"
+          - "2"
+          - "--tmp-outdir-prefix"
+          - "/calrissian/output-data/"
+          - "--outdir"
+          - "/calrissian/output-data/"
+          - "--usage-report"
+          - "/calrissian/output-data/simple-app-usage.json"
+          - "/calrissian/input-data/simple-training-app.cwl"
+          - "/calrissian/input-data/inputs.yml"
+          
+          
+        volumeMounts:
+        - mountPath: /calrissian/input-data
+          name: calrissian-input-data
+          readOnly: false
+        - mountPath: /calrissian/output-data
+          name: calrissian-output-data
+          readOnly: false
+        env:
+        - name: CALRISSIAN_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: HTTP_PROXY
+          value: "http://internet-proxy:3128"
+        - name: HTTPS_PROXY
+          value: "http://internet-proxy:3128"
+
+      restartPolicy: Never
+      volumes:
+      - name: calrissian-input-data
+        persistentVolumeClaim:
+          claimName: calrissian-input-data
+          readOnly: false
+      - name: calrissian-output-data
+        persistentVolumeClaim:
+          claimName: calrissian-output-data
+
+
+
+
