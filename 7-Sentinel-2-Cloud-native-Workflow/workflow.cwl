@@ -82,7 +82,7 @@ $graph:
         ramMax: 512
     hints:
       DockerRequirement:
-        dockerLoad: crop:0.1
+        dockerPull: parhammbr/water-body:crop
     baseCommand: ["python", "-m", "app"]
     arguments: []
     inputs:
@@ -120,7 +120,7 @@ $graph:
         ramMax: 512
     hints:
       DockerRequirement:
-        dockerPull: localhost/norm-diff:latest
+        dockerPull: parhammbr/water-body:norm_diff
     baseCommand: ["python", "-m", "app"]
     arguments: []
     inputs:
@@ -146,7 +146,7 @@ $graph:
         ramMax: 512
     hints:
       DockerRequirement:
-        dockerPull: localhost/otsu:latest
+        dockerPull: parhammbr/water-body:otsu
     baseCommand: ["python", "-m", "app"]
     arguments: []
     inputs:
@@ -172,7 +172,7 @@ $graph:
         ramMax: 512
     hints:
       DockerRequirement:
-        dockerPull: localhost/stac:latest
+        dockerPull: parhammbr/water-body:stac
     baseCommand: ["python", "-m", "app"]
     arguments: []
     inputs:

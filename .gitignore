@@ -1,0 +1,14 @@
+.ipynb_checkpoints
+.geojson
+.tif
+*.geojson
+*.tif
+*.json
+*.geojson
+*.txt
+*.zip
+*.pyc
+*__pycache__
+*.jpg
+*.jpeg
+__pycache__
