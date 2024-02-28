@@ -19,16 +19,16 @@ docker push parhammbr/water-body:crop
 
 3) You can also remove image:
 ```python 
-podman images | grep localhost
+docker images | grep localhost
 
-podman rmi images <image-id>
+docker rmi images <image-id>
 ```
 - Example:
 ```python 
-podman images | grep localhost
+docker images | grep localhost
 output:
 
 localhost/simple-train    latest      aba46eaee95a  8 minutes ago  798 MB
 
-podman rmi images aba46eaee95a
+docker rmi images aba46eaee95a
 ```
