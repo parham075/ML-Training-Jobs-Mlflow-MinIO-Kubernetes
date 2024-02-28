@@ -1,0 +1,666 @@
+
+*** /calrissian/output-data/6bkenu8f: directory ***
+
+
+*** /calrissian/output-data/8v07_yip: directory ***
+
+
+*** /calrissian/output-data/_4ekhgdk: directory ***
+
+::::::::::::::
+/calrissian/output-data/app.log
+::::::::::::::
+[1;30mINFO[0m calrissian 0.10.0 (cwltool 3.0.20210124104916)
+[1;30mINFO[0m Resolved '/calrissian/input-data/simple-training-app.cwl' to 'file:///calrissian/input-data/simple-training-app.cwl'
+[1;30mDEBUG[0m [32mStarting ThreadPoolJobExecutor.run_jobs: total_resources=[ram: 4000.0, cores: 2.0], max_workers=None[0m
+[1;30mDEBUG[0m [32m[workflow ] initialized from file:///calrissian/input-data/simple-training-app.cwl#main[0m
+[1;30mDEBUG[0m [32mwait_for_completion with 0 futures[0m
+[1;30mDEBUG[0m [32m[workflow ] inputs {
+    "n_estimators": [
+        100,
+        200,
+        300
+    ],
+    "max_depth": [
+        10,
+        20,
+        30
+    ],
+    "random_state": [
+        17,
+        19,
+        47
+    ]
+}[0m
+[1;30mINFO[0m [workflow ] starting step train
+[1;30mINFO[0m [step train] start
+[1;30mDEBUG[0m [32m[job train] initializing from file:///calrissian/input-data/simple-training-app.cwl#train as part of step train[0m
+[1;30mDEBUG[0m [32m[job train] {
+    "max_depth": 10,
+    "n_estimators": 100,
+    "random_state": 17
+}[0m
+[1;30mDEBUG[0m [32m[job train] path mappings is {}[0m
+[1;30mDEBUG[0m [32m[job train] command line bindings is [
+    {
+        "position": [
+            -1000000,
+            0
+        ],
+        "datum": "python"
+    },
+    {
+        "position": [
+            -1000000,
+            1
+        ],
+        "datum": "-m"
+    },
+    {
+        "position": [
+            -1000000,
+            2
+        ],
+        "datum": "script"
+    },
+    {
+        "prefix": "--max_depth",
+        "position": [
+            0,
+            "max_depth"
+        ],
+        "datum": 10
+    },
+    {
+        "prefix": "--n_estimators",
+        "position": [
+            0,
+            "n_estimators"
+        ],
+        "datum": 100
+    },
+    {
+        "prefix": "--random_state",
+        "position": [
+            0,
+            "random_state"
+        ],
+        "datum": 17
+    }
+][0m
+[1;30mDEBUG[0m [32mwait_for_completion with 0 futures[0m
+[1;30mINFO[0m [step train] start
+[1;30mDEBUG[0m [32m[job train_2] initializing from file:///calrissian/input-data/simple-training-app.cwl#train as part of step train[0m
+[1;30mDEBUG[0m [32m[job train_2] {
+    "max_depth": 20,
+    "n_estimators": 200,
+    "random_state": 19
+}[0m
+[1;30mDEBUG[0m [32m[job train_2] path mappings is {}[0m
+[1;30mDEBUG[0m [32m[job train_2] command line bindings is [
+    {
+        "position": [
+            -1000000,
+            0
+        ],
+        "datum": "python"
+    },
+    {
+        "position": [
+            -1000000,
+            1
+        ],
+        "datum": "-m"
+    },
+    {
+        "position": [
+            -1000000,
+            2
+        ],
+        "datum": "script"
+    },
+    {
+        "prefix": "--max_depth",
+        "position": [
+            0,
+            "max_depth"
+        ],
+        "datum": 20
+    },
+    {
+        "prefix": "--n_estimators",
+        "position": [
+            0,
+            "n_estimators"
+        ],
+        "datum": 200
+    },
+    {
+        "prefix": "--random_state",
+        "position": [
+            0,
+            "random_state"
+        ],
+        "datum": 19
+    }
+][0m
+[1;30mDEBUG[0m [32mwait_for_completion with 0 futures[0m
+[1;30mINFO[0m [step train] start
+[1;30mDEBUG[0m [32m[job train_3] initializing from file:///calrissian/input-data/simple-training-app.cwl#train as part of step train[0m
+[1;30mDEBUG[0m [32m[job train_3] {
+    "max_depth": 30,
+    "n_estimators": 300,
+    "random_state": 47
+}[0m
+[1;30mDEBUG[0m [32m[job train_3] path mappings is {}[0m
+[1;30mDEBUG[0m [32m[job train_3] command line bindings is [
+    {
+        "position": [
+            -1000000,
+            0
+        ],
+        "datum": "python"
+    },
+    {
+        "position": [
+            -1000000,
+            1
+        ],
+        "datum": "-m"
+    },
+    {
+        "position": [
+            -1000000,
+            2
+        ],
+        "datum": "script"
+    },
+    {
+        "prefix": "--max_depth",
+        "position": [
+            0,
+            "max_depth"
+        ],
+        "datum": 30
+    },
+    {
+        "prefix": "--n_estimators",
+        "position": [
+            0,
+            "n_estimators"
+        ],
+        "datum": 300
+    },
+    {
+        "prefix": "--random_state",
+        "position": [
+            0,
+            "random_state"
+        ],
+        "datum": 47
+    }
+][0m
+[1;30mDEBUG[0m [32mwait_for_completion with 0 futures[0m
+[1;30mDEBUG[0m [32mallocate [ram: 0, cores: 0] from available [ram: 4000.0, cores: 2.0][0m
+[1;30mINFO[0m [workflow ] start
+[1;30mDEBUG[0m [32mrestore [ram: 0, cores: 0] to available [ram: 4000.0, cores: 2.0][0m
+[1;30mDEBUG[0m [32mallocate [ram: 512, cores: 1] from available [ram: 4000.0, cores: 2.0][0m
+[1;30mDEBUG[0m [32mallocate [ram: 512, cores: 1] from available [ram: 3488.0, cores: 1.0][0m
+[1;30mDEBUG[0m [32m[job train] initial work dir {}[0m
+[1;30mDEBUG[0m [32m[job train_2] initial work dir {}[0m
+Building resources spec from {'cores': 1, 'ram': 512}
+--------------------------------------------------------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  labels: {}
+  name: train-2-pod-lrwuuwoz
+spec:
+  containers:
+  - args:
+    - python -m script --max_depth 20 --n_estimators 200 --random_state 19
+    command:
+    - /bin/sh
+    - -c
+    env:
+    - name: AWS_ACCESS_KEY_ID
+      value: minioadmin
+    - name: AWS_SECRET_ACCESS_KEY
+      value: minioadmin
+    - name: HOME
+      value: /tCOyXr
+    - name: MLFLOW_BUCKET
+      value: mlflow
+    - name: MLFLOW_S3_ENDPOINT_URL
+      value: http://minio-service:9000
+    - name: MLFLOW_TRACKING_URI
+      value: http://mlflow-service:5000
+    - name: MLFLOW_VERSION
+      value: 2.6.0
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: PYTHONPATH
+      value: /app
+    - name: TMPDIR
+      value: /tmp
+    - name: artifacts-destination
+      value: s3://mlflow
+    image: training-container:0.1
+    name: train-2-container
+    resources:
+      requests:
+        cpu: '1'
+        memory: 512Mi
+    volumeMounts:
+    - mountPath: /tCOyXr
+      name: calrissian-output-data
+      readOnly: false
+      subPath: ymwcfmb4
+    - mountPath: /tmp
+      name: tmpdir
+    workingDir: /tCOyXr
+  initContainers: []
+  restartPolicy: Never
+  volumes:
+  - name: calrissian-input-data
+    persistentVolumeClaim:
+      claimName: calrissian-input-data
+      readOnly: false
+  - name: calrissian-output-data
+    persistentVolumeClaim:
+      claimName: calrissian-output-data
+      readOnly: false
+  - emptyDir: {}
+    name: tmpdir
+--------------------------------------------------------------------------------
+
+[1;30mDEBUG[0m [32mwait_for_completion with 3 futures[0m
+[1;30mDEBUG[0m [32mwait_for_completion with 2 futures[0m
+Building resources spec from {'cores': 1, 'ram': 512}
+--------------------------------------------------------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  labels: {}
+  name: train-pod-qndyjgif
+spec:
+  containers:
+  - args:
+    - python -m script --max_depth 10 --n_estimators 100 --random_state 17
+    command:
+    - /bin/sh
+    - -c
+    env:
+    - name: AWS_ACCESS_KEY_ID
+      value: minioadmin
+    - name: AWS_SECRET_ACCESS_KEY
+      value: minioadmin
+    - name: HOME
+      value: /tCOyXr
+    - name: MLFLOW_BUCKET
+      value: mlflow
+    - name: MLFLOW_S3_ENDPOINT_URL
+      value: http://minio-service:9000
+    - name: MLFLOW_TRACKING_URI
+      value: http://mlflow-service:5000
+    - name: MLFLOW_VERSION
+      value: 2.6.0
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: PYTHONPATH
+      value: /app
+    - name: TMPDIR
+      value: /tmp
+    - name: artifacts-destination
+      value: s3://mlflow
+    image: training-container:0.1
+    name: train-container
+    resources:
+      requests:
+        cpu: '1'
+        memory: 512Mi
+    volumeMounts:
+    - mountPath: /tCOyXr
+      name: calrissian-output-data
+      readOnly: false
+      subPath: 8v07_yip
+    - mountPath: /tmp
+      name: tmpdir
+    workingDir: /tCOyXr
+  initContainers: []
+  restartPolicy: Never
+  volumes:
+  - name: calrissian-input-data
+    persistentVolumeClaim:
+      claimName: calrissian-input-data
+      readOnly: false
+  - name: calrissian-output-data
+    persistentVolumeClaim:
+      claimName: calrissian-output-data
+      readOnly: false
+  - emptyDir: {}
+    name: tmpdir
+--------------------------------------------------------------------------------
+
+Created k8s pod name train-2-pod-lrwuuwoz with id c4246889-4dc4-4a7f-bc1e-0e7957f95e33
+PodMonitor adding train-2-pod-lrwuuwoz
+k8s pod 'train-2-pod-lrwuuwoz' started
+Created k8s pod name train-pod-qndyjgif with id 2e893686-b81e-49bb-85f7-8afe34ef2d2c
+PodMonitor adding train-pod-qndyjgif
+k8s pod 'train-pod-qndyjgif' started
+[train-2-pod-lrwuuwoz] follow_logs start
+[train-pod-qndyjgif] follow_logs start
+[train-pod-qndyjgif] Hellooooooooooooooooooooooooo /tCOyXr
+[train-pod-qndyjgif] (20640, 8)
+http://mlflow-service:5000 None
+[train-pod-qndyjgif] {'n_estimators': 100, 'max_depth': 10, 'random_state': 17}
+[train-pod-qndyjgif] ['boot', 'var', 'run', 'srv', 'lib64', 'proc', 'etc', 'lib', 'sbin', 'home', 'dev', 'bin', 'root', 'media', 'mnt', 'opt', 'tmp', 'usr', 'sys', 'tCOyXr', 'app', '.dockerenv']
+[train-pod-qndyjgif] follow_logs end
+Handling terminated pod name train-pod-qndyjgif with id 2e893686-b81e-49bb-85f7-8afe34ef2d2c
+handling completion with 0
+PodMonitor removing train-pod-qndyjgif
+shutil.rmtree(/tmp/3gbidvpy, True)
+shutil.rmtree(/tmp/nhd4_5dz, True)
+[1;30mDEBUG[0m [32mrestore [ram: 512, cores: 1] to available [ram: 2976.0, cores: 0.0][0m
+[1;30mDEBUG[0m [32mallocate [ram: 512, cores: 1] from available [ram: 3488.0, cores: 1.0][0m
+[1;30mDEBUG[0m [32m[job train_3] initial work dir {}[0m
+Building resources spec from {'cores': 1, 'ram': 512}
+--------------------------------------------------------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  labels: {}
+  name: train-3-pod-jcpxhoiu
+spec:
+  containers:
+  - args:
+    - python -m script --max_depth 30 --n_estimators 300 --random_state 47
+    command:
+    - /bin/sh
+    - -c
+    env:
+    - name: AWS_ACCESS_KEY_ID
+      value: minioadmin
+    - name: AWS_SECRET_ACCESS_KEY
+      value: minioadmin
+    - name: HOME
+      value: /tCOyXr
+    - name: MLFLOW_BUCKET
+      value: mlflow
+    - name: MLFLOW_S3_ENDPOINT_URL
+      value: http://minio-service:9000
+    - name: MLFLOW_TRACKING_URI
+      value: http://mlflow-service:5000
+    - name: MLFLOW_VERSION
+      value: 2.6.0
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: PYTHONPATH
+      value: /app
+    - name: TMPDIR
+      value: /tmp
+    - name: artifacts-destination
+      value: s3://mlflow
+    image: training-container:0.1
+    name: train-3-container
+    resources:
+      requests:
+        cpu: '1'
+        memory: 512Mi
+    volumeMounts:
+    - mountPath: /tCOyXr
+      name: calrissian-output-data
+      readOnly: false
+      subPath: _4ekhgdk
+    - mountPath: /tmp
+      name: tmpdir
+    workingDir: /tCOyXr
+  initContainers: []
+  restartPolicy: Never
+  volumes:
+  - name: calrissian-input-data
+    persistentVolumeClaim:
+      claimName: calrissian-input-data
+      readOnly: false
+  - name: calrissian-output-data
+    persistentVolumeClaim:
+      claimName: calrissian-output-data
+      readOnly: false
+  - emptyDir: {}
+    name: tmpdir
+--------------------------------------------------------------------------------
+
+[1;30mDEBUG[0m [32mwait_for_completion with 2 futures[0m
+Created k8s pod name train-3-pod-jcpxhoiu with id 1f93097e-3029-4db9-a347-eb4728422689
+PodMonitor adding train-3-pod-jcpxhoiu
+k8s pod 'train-3-pod-jcpxhoiu' started
+[train-3-pod-jcpxhoiu] follow_logs start
+[train-2-pod-lrwuuwoz] Hellooooooooooooooooooooooooo /tCOyXr
+(20640, 8)
+[train-2-pod-lrwuuwoz] http://mlflow-service:5000 None
+{'n_estimators': 200, 'max_depth': 20, 'random_state': 19}
+['boot', 'var', 'run', 'srv', 'lib64', 'proc', 'etc', 'lib', 'sbin', 'home', 'dev', 'bin', 'root', 'media', 'mnt', 'opt', 'tmp', 'usr', 'sys', 'tCOyXr', 'app', '.dockerenv']
+[train-2-pod-lrwuuwoz] follow_logs end
+Handling terminated pod name train-2-pod-lrwuuwoz with id c4246889-4dc4-4a7f-bc1e-0e7957f95e33
+handling completion with 0
+PodMonitor removing train-2-pod-lrwuuwoz
+shutil.rmtree(/tmp/pu977zao, True)
+shutil.rmtree(/tmp/4qi5ljrr, True)
+[1;30mDEBUG[0m [32mrestore [ram: 512, cores: 1] to available [ram: 2976.0, cores: 0.0][0m
+[1;30mDEBUG[0m [32mwait_for_completion with 1 futures[0m
+[train-3-pod-jcpxhoiu] Hellooooooooooooooooooooooooo /tCOyXr
+(20640, 8)
+[train-3-pod-jcpxhoiu] http://mlflow-service:5000 None
+{'n_estimators': 300, 'max_depth': 30, 'random_state': 47}
+['boot', 'var', 'run', 'srv', 'lib64', 'proc', 'etc', 'lib', 'sbin', 'home', 'dev', 'bin', 'root', 'media', 'mnt', 'opt', 'tmp', 'usr', 'sys', 'tCOyXr', 'app', '.dockerenv']
+[train-3-pod-jcpxhoiu] follow_logs end
+Handling terminated pod name train-3-pod-jcpxhoiu with id 1f93097e-3029-4db9-a347-eb4728422689
+handling completion with 0
+PodMonitor removing train-3-pod-jcpxhoiu
+[1;30mDEBUG[0m [32m[step train] produced output {
+    "file:///calrissian/input-data/simple-training-app.cwl#main/train/feature_importances": [
+        {
+            "location": "file:///calrissian/output-data/8v07_yip/importance.csv",
+            "basename": "importance.csv",
+            "nameroot": "importance",
+            "nameext": ".csv",
+            "class": "File",
+            "checksum": "sha1$ddeda3a402cc6be25ae9eeac72a1dca25e088ca2",
+            "size": 251,
+            "http://commonwl.org/cwltool#generation": 0
+        },
+        {
+            "location": "file:///calrissian/output-data/ymwcfmb4/importance.csv",
+            "basename": "importance.csv",
+            "nameroot": "importance",
+            "nameext": ".csv",
+            "class": "File",
+            "checksum": "sha1$c31b617bc6029d93b0b189572085c09861ef5dfc",
+            "size": 254,
+            "http://commonwl.org/cwltool#generation": 0
+        },
+        {
+            "location": "file:///calrissian/output-data/_4ekhgdk/importance.csv",
+            "basename": "importance.csv",
+            "nameroot": "importance",
+            "nameext": ".csv",
+            "class": "File",
+            "checksum": "sha1$d6e14880e8935d899b78ecee21f5afc9f11ac82f",
+            "size": 253,
+            "http://commonwl.org/cwltool#generation": 0
+        }
+    ]
+}[0m
+[1;30mINFO[0m [step train] completed success
+[1;30mINFO[0m [workflow ] completed success
+[1;30mDEBUG[0m [32m[workflow ] outputs {
+    "feature_importances": [
+        {
+            "location": "file:///calrissian/output-data/8v07_yip/importance.csv",
+            "basename": "importance.csv",
+            "nameroot": "importance",
+            "nameext": ".csv",
+            "class": "File",
+            "checksum": "sha1$ddeda3a402cc6be25ae9eeac72a1dca25e088ca2",
+            "size": 251,
+            "http://commonwl.org/cwltool#generation": 0
+        },
+        {
+            "location": "file:///calrissian/output-data/ymwcfmb4/importance.csv",
+            "basename": "importance.csv",
+            "nameroot": "importance",
+            "nameext": ".csv",
+            "class": "File",
+            "checksum": "sha1$c31b617bc6029d93b0b189572085c09861ef5dfc",
+            "size": 254,
+            "http://commonwl.org/cwltool#generation": 0
+        },
+        {
+            "location": "file:///calrissian/output-data/_4ekhgdk/importance.csv",
+            "basename": "importance.csv",
+            "nameroot": "importance",
+            "nameext": ".csv",
+            "class": "File",
+            "checksum": "sha1$d6e14880e8935d899b78ecee21f5afc9f11ac82f",
+            "size": 253,
+            "http://commonwl.org/cwltool#generation": 0
+        }
+    ]
+}[0m
+shutil.rmtree(/tmp/ga0k0u6q, True)
+shutil.rmtree(/tmp/7tyghq35, True)
+[1;30mDEBUG[0m [32mrestore [ram: 512, cores: 1] to available [ram: 3488.0, cores: 1.0][0m
+[1;30mDEBUG[0m [32mwait_for_completion with 0 futures[0m
+[1;30mDEBUG[0m [32mwait_for_completion with 0 futures[0m
+[1;30mDEBUG[0m [32mFinishing ThreadPoolExecutor.run_jobs: total_resources=[ram: 4000.0, cores: 2.0], available_resources=[ram: 4000.0, cores: 2.0][0m
+[1;30mDEBUG[0m [32mMoving /calrissian/output-data/8v07_yip/importance.csv to /calrissian/output-data/importance.csv[0m
+[1;30mDEBUG[0m [32mMoving /calrissian/output-data/ymwcfmb4/importance.csv to /calrissian/output-data/importance.csv_2[0m
+[1;30mDEBUG[0m [32mMoving /calrissian/output-data/_4ekhgdk/importance.csv to /calrissian/output-data/importance.csv_3[0m
+[1;30mINFO[0m Final process status is success
+Starting Cleanup
+Finishing Cleanup
+::::::::::::::
+/calrissian/output-data/importance.csv
+::::::::::::::
+Feature,Importance
+MedInc,0.59339212598871
+AveOccup,0.13951320051620583
+Latitude,0.07838670787322118
+Longitude,0.07659266538915198
+HouseAge,0.0486234260067542
+AveRooms,0.02964709009890919
+Population,0.017737891713287907
+AveBedrms,0.016106892413759767
+::::::::::::::
+/calrissian/output-data/importance.csv_2
+::::::::::::::
+Feature,Importance
+MedInc,0.5273709813872154
+AveOccup,0.13841657574236033
+Longitude,0.08793594463329352
+Latitude,0.08786825962322571
+HouseAge,0.05403794452699707
+AveRooms,0.04470729869800686
+Population,0.030412918289529366
+AveBedrms,0.029250077099371767
+::::::::::::::
+/calrissian/output-data/importance.csv_3
+::::::::::::::
+Feature,Importance
+MedInc,0.5245537460742645
+AveOccup,0.13804675058137014
+Latitude,0.08951451434678932
+Longitude,0.08917534363882226
+HouseAge,0.05433879357431738
+AveRooms,0.0439015835967309
+Population,0.030985118589862446
+AveBedrms,0.029484149597843103
+::::::::::::::
+/calrissian/output-data/results.json
+::::::::::::::
+{
+    "feature_importances": [
+        {
+            "location": "file:///calrissian/output-data/importance.csv",
+            "basename": "importance.csv",
+            "class": "File",
+            "checksum": "sha1$ddeda3a402cc6be25ae9eeac72a1dca25e088ca2",
+            "size": 251,
+            "path": "/calrissian/output-data/importance.csv"
+        },
+        {
+            "location": "file:///calrissian/output-data/importance.csv_2",
+            "basename": "importance.csv",
+            "class": "File",
+            "checksum": "sha1$c31b617bc6029d93b0b189572085c09861ef5dfc",
+            "size": 254,
+            "path": "/calrissian/output-data/importance.csv_2"
+        },
+        {
+            "location": "file:///calrissian/output-data/importance.csv_3",
+            "basename": "importance.csv",
+            "class": "File",
+            "checksum": "sha1$d6e14880e8935d899b78ecee21f5afc9f11ac82f",
+            "size": 253,
+            "path": "/calrissian/output-data/importance.csv_3"
+        }
+    ]
+}
+::::::::::::::
+/calrissian/output-data/simple-app-usage.json
+::::::::::::::
+{
+    "cores_allowed": 2.0,
+    "ram_mb_allowed": 4000.0,
+    "children": [
+        {
+            "cpus": 1.0,
+            "ram_megabytes": 536.870912,
+            "disk_megabytes": 0.000251,
+            "name": "train",
+            "start_time": "2024-02-27T15:10:49+00:00",
+            "finish_time": "2024-02-27T15:10:59+00:00",
+            "elapsed_hours": 0.002777777777777778,
+            "elapsed_seconds": 10.0,
+            "ram_megabyte_hours": 1.4913080888888888,
+            "cpu_hours": 0.002777777777777778
+        },
+        {
+            "cpus": 1.0,
+            "ram_megabytes": 536.870912,
+            "disk_megabytes": 0.000254,
+            "name": "train_2",
+            "start_time": "2024-02-27T15:10:49+00:00",
+            "finish_time": "2024-02-27T15:11:13+00:00",
+            "elapsed_hours": 0.006666666666666667,
+            "elapsed_seconds": 24.0,
+            "ram_megabyte_hours": 3.5791394133333334,
+            "cpu_hours": 0.006666666666666667
+        },
+        {
+            "cpus": 1.0,
+            "ram_megabytes": 536.870912,
+            "disk_megabytes": 0.000253,
+            "name": "train_3",
+            "start_time": "2024-02-27T15:11:00+00:00",
+            "finish_time": "2024-02-27T15:11:39+00:00",
+            "elapsed_hours": 0.010833333333333334,
+            "elapsed_seconds": 39.0,
+            "ram_megabyte_hours": 5.816101546666666,
+            "cpu_hours": 0.010833333333333334
+        }
+    ],
+    "start_time": "2024-02-27T15:10:49+00:00",
+    "finish_time": "2024-02-27T15:11:39+00:00",
+    "elapsed_hours": 0.013888888888888888,
+    "elapsed_seconds": 50.0,
+    "total_cpu_hours": 0.020277777777777777,
+    "total_ram_megabyte_hours": 10.886549048888888,
+    "total_disk_megabytes": 0.000758,
+    "total_tasks": 3,
+    "max_parallel_cpus": 2.0,
+    "max_parallel_ram_megabytes": 1073.741824,
+    "max_parallel_tasks": 2
+}
+*** /calrissian/output-data/ymwcfmb4: directory ***
+2024-02-27T15:15:20.496306467Z

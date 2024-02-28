@@ -38,8 +38,10 @@ def log_rf(n_estimators:int,max_depth:int,random_state:int):
     california = fetch_california_housing()
     X = pd.DataFrame(california.data, columns=california.feature_names)
     y = california.target
+    print("Hellooooooooooooooooooooooooo",os.getcwd())
     print(X.shape)
-    mlflow.set_tracking_uri('http://127.0.0.1:5000/')
+    print(os.environ.get('MLFLOW_TRACKING_URI'),os.environ.get('HTTP_PROXY'))
+    mlflow.set_tracking_uri(os.environ.get('MLFLOW_TRACKING_URI'))
     # Split the dataset
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -49,17 +51,18 @@ def log_rf(n_estimators:int,max_depth:int,random_state:int):
             "max_depth": int(max_depth),
             "random_state": int(random_state)
             }
+        print(params)
         # Create and train model
         rf = RandomForestRegressor(**params)
         rf.fit(X_train, y_train)
         predictions = rf.predict(X_test)
 
         # Log model
-        mlflow.sklearn.log_model(rf, "random_forest_model")
+        mlflow.sklearn.log_model(rf,'Randome_Forest')
 
         # Log parameters
         mlflow.log_params(params)
-
+        
         # Log metrics
         mlflow.log_metrics({
             "mse": mean_squared_error(y_test, predictions),
@@ -70,19 +73,20 @@ def log_rf(n_estimators:int,max_depth:int,random_state:int):
         # Log feature importance
         importance = pd.DataFrame(list(zip(X_train.columns, rf.feature_importances_)),
                                 columns=["Feature", "Importance"]).sort_values("Importance", ascending=False)
-        importance_path = "/calrissian/output-data/importance.csv"
-        importance.to_csv(importance_path, index=False)
-        print(os.path.isfile(importance_path))
-        # mlflow.log_artifact(importance_path, "feature-importance")
+        importance_path = "importance.csv"
         
-
+        importance.to_csv(importance_path, index=False)
+        # print(os.path.isfile(importance_path))
+        mlflow.log_artifact(importance_path, "feature-importance")
+        print(os.listdir('../'))
+        # print(os.listdir('../'))
         # # Log plot
-        # fig, ax = plt.subplots()
-        # importance.plot.bar(ax=ax)
-        # plt.title("Feature Importances")
-        # mlflow.log_figure(fig, "feature_importances.png")
-
-        return run.info.run_id
+        fig, ax = plt.subplots()
+        importance.plot.bar(ax=ax)
+        plt.title("Feature Importances")
+        mlflow.log_figure(fig, "feature_importances.png")
+    return None
+        #return run.info.run_id
 
 if __name__ == "__main__":
     # Log the experiment

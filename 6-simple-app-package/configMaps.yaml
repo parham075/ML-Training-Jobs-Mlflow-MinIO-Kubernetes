@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: input-conf
+  namespace: test
+data:
+  inputs.yml: |
+    n_estimators: 
+      - 100
+      - 200
+      - 300
+    max_depth: 
+      - 10
+      - 20
+      - 30
+    random_state: 
+      - 17
+      - 19
+      - 47
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: train-conf
+  namespace: test
+data:
+  simple-training-app.cwl: |-
+    cwlVersion: v1.0
+    $namespaces:
+      s: https://schema.org/
+    s:softwareVersion: 1.0.0
+    schemas:
+      - http://schema.org/version/9.0/schemaorg-current-http.rdf
+    $graph:
+      - class: Workflow
+        id: main
+        label: Training a randomforest calssifier
+        doc: Training a randomforest calssifier on callifornia data and track it using mlflow
+        requirements:
+          - class: ScatterFeatureRequirement
+        inputs:
+          n_estimators:
+            label: number of estimator
+            doc: number of estimator
+            type: int[]
+          max_depth:
+            label: max_depth
+            doc: max_depth
+            type: int[]
+            default: [10]
+          random_state:
+            label: random_state
+            doc: random_state to avoid overfitting
+            type: int[]
+            default: [100]
+          
+        outputs: 
+          - id: feature_importances
+            outputSource: 
+              - train/feature_importances
+            type: File[]
+        steps:
+          train:
+            run: "#train"
+            in:
+              n_estimators: n_estimators
+              max_depth: max_depth
+              random_state: random_state
+            out: 
+              - feature_importances
+            scatter: 
+              - n_estimators
+              - max_depth
+              - random_state
+            scatterMethod: dotproduct
+
+
+
+      - class: CommandLineTool
+        id: train
+        requirements:
+          InlineJavascriptRequirement: {}
+          EnvVarRequirement:
+            envDef:
+              PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+              PYTHONPATH: /app
+              MLFLOW_TRACKING_URI: http://mlflow-service:5000
+              MLFLOW_S3_ENDPOINT_URL: http://minio-service:9000
+              MLFLOW_BUCKET: mlflow
+              AWS_ACCESS_KEY_ID: minioadmin
+              AWS_SECRET_ACCESS_KEY: minioadmin
+              MLFLOW_VERSION: 2.6.0
+              artifacts-destination: s3://mlflow
+          ResourceRequirement:
+            coresMax: 1
+            ramMax: 512
+        hints:
+          DockerRequirement:
+            dockerPull: training-container:0.1
+        
+        baseCommand: ["python", "-m", "script"]
+        arguments: []
+        
+        inputs:
+          n_estimators:
+            type: int
+            inputBinding:
+              prefix: --n_estimators
+          max_depth:
+            type: int
+            inputBinding:
+              prefix: --max_depth
+          random_state:
+            type: int
+            inputBinding:
+              prefix: --random_state
+          
+        outputs: 
+          feature_importances:
+            outputBinding:
+              glob: '*.csv'
+            type: File
+            
+      

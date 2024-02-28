@@ -15,36 +15,40 @@ $graph:
       n_estimators:
         label: number of estimator
         doc: number of estimator
-        type: int
+        type: int[]
       max_depth:
         label: max_depth
         doc: max_depth
-        type: int
-        default: 10
+        type: int[]
+        default: [10]
       random_state:
         label: random_state
         doc: random_state to avoid overfitting
-        type: int
-        default: 100
-
-    outputs:
-      - id: Feature Importance
-        outputSource:
-          - Training/feature_importances
-        type: File
+        type: int[]
+        default: [100]
+      
+    outputs: 
+      - id: feature_importances
+        outputSource: 
+          - train/feature_importances
+        type: File[]
     steps:
-      Training:
+      train:
         run: "#train"
         in:
           n_estimators: n_estimators
           max_depth: max_depth
           random_state: random_state
-        out:
+        out: 
           - feature_importances
-      # Checking:
-      #   run: "#check"
-      #   in: []
-      #   out: []
+        scatter: 
+          - n_estimators
+          - max_depth
+          - random_state
+        scatterMethod: dotproduct
+      
+
+
   - class: CommandLineTool
     id: train
     requirements:
@@ -52,15 +56,24 @@ $graph:
       EnvVarRequirement:
         envDef:
           PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-          PYTHONPATH: /calrissian
+          PYTHONPATH: /app
+          MLFLOW_TRACKING_URI: http://mlflow-service:5000
+          MLFLOW_S3_ENDPOINT_URL: http://minio-service:9000
+          MLFLOW_BUCKET: mlflow
+          AWS_ACCESS_KEY_ID: minioadmin
+          AWS_SECRET_ACCESS_KEY: minioadmin
+          MLFLOW_VERSION: 2.6.0
+          artifacts-destination: s3://mlflow
       ResourceRequirement:
         coresMax: 1
         ramMax: 512
     hints:
       DockerRequirement:
-        dockerPull: docker.io/pippo/training-container:0.1
-    baseCommand: ["python", "-m", "app"]
+        dockerPull: training-container:0.1
+    
+    baseCommand: ["python", "-m", "script"]
     arguments: []
+    
     inputs:
       n_estimators:
         type: int
@@ -75,28 +88,10 @@ $graph:
         inputBinding:
           prefix: --random_state
       
-    outputs:
+    outputs: 
       feature_importances:
         outputBinding:
-          glob: 'importance.csv'
-          location: '/calrissian/output-data/'
+          glob: '*.csv'
         type: File
         
-  # - class: CommandLineTool
-  #     id: check
-  #     requirements:
-  #       InlineJavascriptRequirement: {}
-  #       EnvVarRequirement:
-  #         envDef:
-  #           PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-  #           PYTHONPATH: /calrissian/out
-  #       ResourceRequirement:
-  #         coresMax: 1
-  #         ramMax: 512
-  #     hints:
-  #       DockerRequirement:
-  #         dockerPull: docker.io/pippo/training-container:0.1
-  #     baseCommand: ["ls", "/calrissian/output-data"]
-  #     arguments: []
-  #     inputs: []
-  #     outputs: []
+

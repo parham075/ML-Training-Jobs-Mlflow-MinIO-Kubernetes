@@ -1,3 +1,55 @@
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: log-reader-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["create","patch","delete","list","watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-manager-role
+rules:
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get","list"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: log-reader-default-binding
+  namespace: test
+  
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: log-reader-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: test
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-manager-default-binding
+  namespace: test
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pod-manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: test
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -25,6 +77,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: stage-copy-data
+  namespace: test
 spec:
   template:
     spec:
@@ -71,6 +124,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: simple-training
+  namespace: test
 spec:
   template:
     spec:
@@ -80,6 +134,12 @@ spec:
         securityContext:
           runAsUser: 1000
           runAsGroup: 1000
+        
+        # command:
+        # - /bin/bash
+        # - -c
+        # args:
+        #   - printenv| grep MLFLOW_TRACKING_URI
         command: 
           - calrissian
         args:
@@ -114,10 +174,9 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: HTTP_PROXY
-          value: "http://internet-proxy:3128"
-        - name: HTTPS_PROXY
-          value: "http://internet-proxy:3128"
+
+        - name: MLFLOW_TRACKING_URI
+          value: http://mlflow-service:5000
 
       restartPolicy: Never
       volumes:
@@ -128,7 +187,6 @@ spec:
       - name: calrissian-output-data
         persistentVolumeClaim:
           claimName: calrissian-output-data
-
 
 
 

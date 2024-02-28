@@ -1,0 +1,14 @@
+n_estimators: 
+  - 100
+  - 200
+  - 300
+max_depth: 
+  - 10
+  - 20
+  - 30
+random_state: 
+  - 17
+  - 19
+  - 47
+  
+  
